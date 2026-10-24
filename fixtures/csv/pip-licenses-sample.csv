@@ -1,0 +1,10 @@
+Name,Version,License,Scope
+demo-http,1.0.0,MIT,runtime
+demo-choice,2.0.0,MIT OR GPL-3.0-only,runtime
+demo-copyleft,3.0.0,AGPL-3.0-only,runtime
+demo-restricted,1.2.0,SSPL-1.0,runtime
+demo-linter,4.0.0,GPL-3.0-only,dev
+demo-unknown,1.0.0,UNLICENSED,
+"demo,quoted",1.0.0,"Apache License, Version 2.0",runtime
+demo-duplicate,1.0.0,MIT,runtime
+demo-duplicate,1.0.0,GPL-3.0-only,runtime

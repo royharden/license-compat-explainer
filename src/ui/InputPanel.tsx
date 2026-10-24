@@ -3,17 +3,26 @@ import type { DragEvent } from 'react';
 import { SAMPLES } from '../lib/samples.ts';
 import type { InputKind } from '../worker/protocol.ts';
 import { checkFileSize, detectInputKind } from './inputDetect.ts';
+import type { CsvMapping } from '@core/types.ts';
+import { parseCsvRecords, suggestCsvMapping } from '@core/inputs/inventoryCsv.ts';
+import { CsvMappingPanel } from './CsvMappingPanel.tsx';
 
 export interface LoadedInput {
   kind: InputKind;
   fileName: string;
   text: string;
   origin: 'file' | 'sample';
+  csvMapping: CsvMapping | null;
 }
 
 export function InputPanel({ input, onInput }: { input: LoadedInput | null; onInput: (input: LoadedInput) => void }) {
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
+  const load = (kind: InputKind, fileName: string, text: string, origin: LoadedInput['origin']) => {
+    const parsed = kind === 'csv' ? parseCsvRecords(text) : null;
+    const csvMapping = parsed?.ok ? suggestCsvMapping(parsed.records[0]?.fields ?? []) : null;
+    onInput({ kind, fileName, text, origin, csvMapping });
+  };
 
   const readFile = async (file: File) => {
     const sizeError = checkFileSize(file.size);
@@ -28,7 +37,7 @@ export function InputPanel({ input, onInput }: { input: LoadedInput | null; onIn
       return;
     }
     setError(null);
-    onInput({ kind, fileName: file.name, text, origin: 'file' });
+    load(kind, file.name, text, 'file');
   };
 
   const onDrop = (event: DragEvent<HTMLDivElement>) => {
@@ -42,7 +51,7 @@ export function InputPanel({ input, onInput }: { input: LoadedInput | null; onIn
     const sample = SAMPLES.find((s) => s.id === id);
     if (!sample) return;
     setError(null);
-    onInput({ kind: sample.kind, fileName: sample.fileName, text: sample.text, origin: 'sample' });
+    load(sample.kind, sample.fileName, sample.text, 'sample');
   };
 
   return (
@@ -90,10 +99,13 @@ export function InputPanel({ input, onInput }: { input: LoadedInput | null; onIn
       )}
       {input && (
         <p className="loaded">
-          Loaded <code>{input.fileName}</code> ({input.kind === 'csv' ? 'inventory CSV, columns auto-mapped' : 'npm lockfile'},{' '}
+          Loaded <code>{input.fileName}</code> ({input.kind === 'csv' ? 'inventory CSV, confirm column mapping below' : 'npm lockfile'},{' '}
           {input.text.length.toLocaleString()} characters)
         </p>
       )}
+      {input?.kind === 'csv' && <CsvMappingPanel text={input.text}
+        mapping={input.csvMapping ?? { name: null, version: null, licence: null, scope: null }}
+        onChange={(csvMapping) => onInput({ ...input, csvMapping })} />}
     </div>
   );
 }

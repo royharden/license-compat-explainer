@@ -55,7 +55,7 @@ export function summaryLine(result: AnalysisResult): string {
   return `${result.findings.length} findings: ${parts.join(', ')}`;
 }
 
-export function exportFileName(result: AnalysisResult, extension: 'json'): string {
+export function exportFileName(result: AnalysisResult, extension: 'json' | 'md'): string {
   const base = (result.input.rootName ?? 'inventory').replace(/[^A-Za-z0-9._-]+/g, '-').slice(0, 60) || 'inventory';
   return `${base}.licence-report.${extension}`;
 }

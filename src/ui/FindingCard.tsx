@@ -1,9 +1,15 @@
 import { useState } from 'react';
-import type { Finding } from '@core/types.ts';
+import type { Acknowledgements, Finding, Settings } from '@core/types.ts';
+import { OPTION_LABELS } from '@core/explain/options.ts';
+import { RulingControls } from './RulingControls.tsx';
+import type { RulingControlsProps } from './RulingControls.tsx';
 import { TemplatePanel } from './TemplatePanel.tsx';
 import { VERDICT_LABELS, formatPath, formatWhere } from './reportView.ts';
 
-export function FindingCard({ finding }: { finding: Finding }) {
+export function FindingCard({ finding, settings, rulingControls, onAcknowledge }: {
+  finding: Finding; settings: Settings; rulingControls: RulingControlsProps;
+  onAcknowledge: (key: keyof Acknowledgements) => void;
+}) {
   const [open, setOpen] = useState(false);
   const showLeaves = finding.leaves.length > 1;
   return (
@@ -59,6 +65,17 @@ export function FindingCard({ finding }: { finding: Finding }) {
         )}
       </dl>
 
+      <h4>Obligations</h4>
+      {finding.obligations.length ? <ul>{finding.obligations.map((text) => <li key={text}>{text}</li>)}</ul> : <p>None identified by the modelled rule; this is not a complete legal audit.</p>}
+      <h4>Assumptions</h4>
+      {finding.assumptions.length ? <ul>{finding.assumptions.map((text) => <li key={text}>{text}</li>)}</ul> : <p>No additional rule assumptions listed.</p>}
+      {finding.options.length > 0 && <><h4>Options to review</h4><ul>{finding.options.map((id) => <li key={id}>{OPTION_LABELS[id]}</li>)}</ul></>}
+      {finding.ruleIds.includes('R-EXC-CONTEXT') && !settings.acknowledgements.unmodified_use &&
+        <button type="button" disabled={rulingControls.disabled} onClick={() => onAcknowledge('unmodified_use')}>Acknowledge for this analysis: dependency used as published and linked unmodified (GCC: eligible compilation process)</button>}
+      {finding.ruleIds.includes('R-PAIR-MPL-GPL-CONTEXT') && !settings.acknowledgements.mpl_secondary_eligible &&
+        <button type="button" disabled={rulingControls.disabled} onClick={() => onAcknowledge('mpl_secondary_eligible')}>Acknowledge for this analysis: MPL files carry no Exhibit B notice</button>}
+      <p className="hint">Context acknowledgements apply globally and are user-asserted, not verified from source. Acknowledging reruns the analysis.</p>
+
       {showLeaves && (
         <table className="leaves">
           <thead>
@@ -91,6 +108,7 @@ export function FindingCard({ finding }: { finding: Finding }) {
         {open ? 'Hide explanation' : 'Show explanation'}
       </button>
       {open && <TemplatePanel finding={finding} />}
+      <RulingControls {...rulingControls} />
     </article>
   );
 }

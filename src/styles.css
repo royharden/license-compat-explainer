@@ -365,3 +365,12 @@ code {
     grid-template-columns: 1fr;
   }
 }
+/* M3: storage/auth, mapping and separate review overlays. */
+.auth-panel, .csv-mapping, .ruling-controls { margin: 1rem 0; padding: 1rem; border: 1px solid #9aa5b1; border-radius: .5rem; }
+.ruling-controls textarea { display: block; width: 100%; box-sizing: border-box; margin: .5rem 0; font: inherit; }
+.ruling-overlay { border-left: 4px solid #417861; padding-left: 1rem; overflow-wrap: anywhere; }
+.ruling-overlay.stale, .ruling-overlay.different_settings { border-color: #a97816; }
+.csv-mapping table { max-width: 100%; display: block; overflow-x: auto; }
+.csv-mapping td, .csv-mapping th { padding: .4rem; text-align: left; overflow-wrap: anywhere; }
+.export, .actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.field input, .auth-panel input { font: inherit; padding: .4rem; }
