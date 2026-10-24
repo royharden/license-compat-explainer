@@ -1,0 +1,30 @@
+{"id":"s01","origin":"synthetic","split":"dev","raw":" MIT ","expected":"MIT","basis":"Authored whitespace example; no public lockfile provenance"}
+{"id":"s02","origin":"synthetic","split":"dev","raw":"mit license","expected":"MIT","basis":"Authored alias example"}
+{"id":"s03","origin":"synthetic","split":"dev","raw":"Expat","expected":"MIT","basis":"Authored alias example"}
+{"id":"s04","origin":"synthetic","split":"dev","raw":"MIT/X11","expected":"MIT","basis":"Authored alias-before-slash example"}
+{"id":"s05","origin":"synthetic","split":"dev","raw":"Apache 2","expected":"Apache-2.0","basis":"Authored explicit version alias"}
+{"id":"s06","origin":"synthetic","split":"dev","raw":"Apache License, Version 2.0","expected":"Apache-2.0","basis":"Authored explicit version alias"}
+{"id":"s07","origin":"synthetic","split":"dev","raw":"The Apache Software License, Version 2.0","expected":"Apache-2.0","basis":"Authored explicit version alias"}
+{"id":"s08","origin":"synthetic","split":"dev","raw":"ISC License","expected":"ISC","basis":"Authored alias example"}
+{"id":"s09","origin":"synthetic","split":"dev","raw":"new BSD license","expected":"BSD-3-Clause","basis":"Authored explicit BSD variant alias"}
+{"id":"s10","origin":"synthetic","split":"dev","raw":"Simplified BSD License","expected":"BSD-2-Clause","basis":"Authored explicit BSD variant alias"}
+{"id":"s11","origin":"synthetic","split":"dev","raw":"Boost Software License 1.0","expected":"BSL-1.0","basis":"Authored Boost versus Business Source disambiguation"}
+{"id":"s12","origin":"synthetic","split":"dev","raw":"Business Source License 1.1","expected":"BUSL-1.1","basis":"Authored restricted-class alias example"}
+{"id":"s13","origin":"synthetic","split":"dev","raw":"BSD","expected":null,"basis":"Authored ambiguity guard; variant unspecified"}
+{"id":"s14","origin":"synthetic","split":"dev","raw":"BSL","expected":null,"basis":"Authored ambiguity guard; Boost or Business Source"}
+{"id":"s15","origin":"synthetic","split":"dev","raw":"BSL-1.1","expected":null,"basis":"Authored explicit look-alike guard"}
+{"id":"s16","origin":"synthetic","split":"dev","raw":"GPL","expected":null,"basis":"Authored versionless copyleft guard"}
+{"id":"s17","origin":"synthetic","split":"dev","raw":"Apache","expected":null,"basis":"Authored versionless alias guard"}
+{"id":"s18","origin":"synthetic","split":"dev","raw":"Public Domain","expected":null,"basis":"Authored legal designation ambiguity guard"}
+{"id":"s19","origin":"synthetic","split":"dev","raw":"SEE LICENSE IN LICENSE.txt","expected":null,"basis":"Authored external document reference; no scanning"}
+{"id":"s20","origin":"synthetic","split":"dev","raw":"UNLICENSED","expected":null,"basis":"Authored unlicensed example"}
+{"id":"s21","origin":"synthetic","split":"dev","raw":"","expected":null,"basis":"Authored missing metadata example"}
+{"id":"s22","origin":"synthetic","split":"dev","raw":"WTFPL","expected":null,"basis":"Authored valid but unsupported catalogue id"}
+{"id":"s23","origin":"synthetic","split":"dev","raw":"LicenseRef-Custom","expected":null,"basis":"Authored private licence reference; no fuzzy reinterpretation"}
+{"id":"s24","origin":"synthetic","split":"dev","raw":"MIT licens","expected":"MIT","basis":"Authored one-edit suffix typo with same family and no version change"}
+{"id":"s25","origin":"synthetic","split":"dev","raw":"Apache License, Version 2.0x","expected":"Apache-2.0","basis":"Authored one-edit suffix typo; explicit family/version preserved"}
+{"id":"s26","origin":"synthetic","split":"dev","raw":"BSD 3-Clause Licens","expected":"BSD-3-Clause","basis":"Authored one-edit suffix typo; variant number preserved"}
+{"id":"s27","origin":"synthetic","split":"dev","raw":"Boost Software License 1.9","expected":null,"basis":"Authored wrong version; fuzzy must not change version digits"}
+{"id":"s28","origin":"synthetic","split":"dev","raw":"GPL-9.0-only","expected":null,"basis":"Authored unsupported version; no guessed downgrade"}
+{"id":"s29","origin":"synthetic","split":"dev","raw":"Eclipse Public License 2.0","expected":"EPL-2.0","basis":"Authored explicit version alias"}
+{"id":"s30","origin":"synthetic","split":"dev","raw":"Mozilla Public License 2.0 (MPL 2.0)","expected":"MPL-2.0","basis":"Authored explicit version alias"}

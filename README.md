@@ -7,15 +7,15 @@ leaves your machine.
 
 **Not legal advice.** Verdicts come from a fixed rule table applied to licence metadata only.
 
-## Status: construction in progress (Dirty Mode)
+## Status: implementation complete in Dirty Mode; runtime unverified
 
 This repository is being written in **Dirty Mode**: source code only, checked statically.
-**Nothing has been installed, built or run.** No test has run, no type check or lint has run, the
-app has never been opened in a browser, and there is no `package-lock.json` yet. Every runtime
+**No application/runtime code has run.** No install, test, eval, type check, lint or build has run;
+the app has never been opened, no migration or edge function has executed, and there is no `package-lock.json` yet. Every runtime
 check that is owed is listed in [`docs/DEFERRED-VALIDATION.md`](docs/DEFERRED-VALIDATION.md).
 This README makes no claim that anything works.
 
-What exists as source after milestones M1–M4:
+What exists as source after milestones M1–M5:
 
 - Shared analysis core in `supabase/functions/_shared/core/` (pure TypeScript, zero dependencies,
   meant to run unchanged in the browser worker, Node and Deno):
@@ -69,7 +69,22 @@ What exists as source after milestones M1–M4:
 All three dev trees, the changed-expression demo and a synthetic pip-licenses-shaped CSV are
 available in the sample loader. The CSV is authored test data, not output captured from pip-licenses.
 
-Not built yet: evaluation and hand-off documents (M5). Live explanations are inactive by default;
+Evaluation source in `scripts/eval.ts` compares the full engine with the raw denylist, class
+ladder and mode-blind distribution matrix approximations; the matrix shares our distribution
+rules and is not an independent oracle. A separate esdecode bridge seam reports `not_run`
+until its actual version/API/scenarios are verified, and always abstains in library mode (D19).
+Metrics preserve OSADL and author strata, five-class versus set-valued gold confusion, conflict
+precision/recall, coverage, unknowns, abstentions, tree gaps and per-case rule/OR-side observations.
+The synthetic messy-string sample and eval-only alias-plus-fuzzy normaliser are dev-only.
+Explanation metrics require observed ledgers; mock/live strata stay separate and no offered
+passage count is used as a generated-quote denominator. `--normaliser jev` is an explicit
+not-implemented stub. `--explain live` reports `not_run`; the direct-provider local campaign
+seam requires separately authorized transport/configuration and a persistent local cap ledger.
+No eval calls the public explanation function. Heldout is one-use after dev/source freeze.
+
+The [limitations](docs/LIMITATIONS.md), [unrun audit protocol](docs/AUDIT.md) and
+[inspect-only Bolt handoff](BOLT-HANDOFF.md) describe the remaining boundaries.
+Live explanations are inactive by default;
 missing provider/configuration yields a labelled template and never silently selects mock.
 
 Live activation requires owner-verified server settings: `EXPLAIN_PROVIDER`, `EXPLAIN_MODEL`,
@@ -84,6 +99,16 @@ and `app.settings.explain_run_cap_usd`; unset settings refuse reservations. Exis
 are never raised automatically. Proposed caps in the plan are not spending authorization.
 Provisioning/gateway, price/token bounds, RLS and concurrency checks remain deferred.
 
+## Generated evaluation results
+
+<!-- EVAL-RESULTS:BEGIN -->
+Not yet run. No verdict, normaliser, grounding, latency, cost or helpfulness scores exist.
+<!-- EVAL-RESULTS:END -->
+
+Only the eval writer changes this block. Author/tree labels are partly true by construction;
+OSADL distribution agreement is a limited external anchor, not legal accuracy. See
+[results/README.md](results/README.md) for the receipt layout and one-use heldout policy.
+
 ## Planned commands (none has been run)
 
 ```sh
@@ -93,7 +118,12 @@ npm test             # vitest
 npm run typecheck    # tsc -b
 npm run lint         # eslint
 npm run build        # tsc -b && vite build
+npm run eval         # dev; writes actual observations, never run during Dirty Mode
 ```
+
+Before starting a dev server, reserve a port under the agent-ports skill. D2 gives exact
+freeze/heldout steps; do not run heldout to debug the runner. Future results must state their
+actual executed scope and cannot retroactively establish runtime validation for this construction.
 
 ## Licence
 

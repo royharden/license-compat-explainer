@@ -14,7 +14,8 @@
     "test": "vitest run",
     "check:syntax": "node --experimental-vm-modules --no-warnings scripts/static-syntax-check.mjs",
     "rules:doc": "tsx scripts/gen-rules-doc.ts",
-    "split:verify": "tsx scripts/split.ts --verify"
+    "split:verify": "tsx scripts/split.ts --verify",
+    "eval": "tsx scripts/eval.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.45.4",
