@@ -1,0 +1,32 @@
+{
+  "fixture": "hosted-mit-service.v2.package-lock.json",
+  "baseFixture": "hosted-mit-service.package-lock.json",
+  "baseSidecar": "hosted-mit-service.expected.json",
+  "split": "dev",
+  "origin": "author",
+  "synthetic": true,
+  "description": "Demo journey step 8 (PLAN §1.6): same packages, versions and install locations as the base tree; exactly one package's licence changed, so a ruling recorded against the base tree's expression becomes stale (expr_hash differs). Every other finding equals the base sidecar.",
+  "settings": {
+    "projectLicense": "MIT",
+    "mode": "hosted",
+    "bundled": false,
+    "acknowledgements": {
+      "unmodified_use": false,
+      "mpl_secondary_eligible": false
+    }
+  },
+  "writtenAgainstRulesEdition": "2026-10-24.m1-stub",
+  "changed": {
+    "location": "node_modules/sspl-db",
+    "name": "sspl-db",
+    "version": "6.0.0",
+    "licenceBefore": "SSPL-1.0",
+    "licenceAfter": "Elastic-2.0"
+  },
+  "expectedChanged": {
+    "m1": { "verdict": "needs_review", "ruleIds": ["R-SA-REVIEW"] },
+    "m2": { "verdict": "needs_review", "ruleIds": ["R-SA-REVIEW"], "changesInM2": false },
+    "exprHashChanged": true,
+    "note": "The verdict is unchanged; only the expression (and so the ruling identity's expr_hash) changed."
+  }
+}

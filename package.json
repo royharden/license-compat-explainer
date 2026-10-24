@@ -1,0 +1,36 @@
+{
+  "name": "license-compat-explainer",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Explains npm/CSV dependency licence compatibility with a project licence and shipping mode. Not legal advice.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "check:syntax": "node --experimental-vm-modules --no-warnings scripts/static-syntax-check.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.45.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.6",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.3",
+    "eslint": "9.13.0",
+    "eslint-plugin-react-hooks": "5.0.0",
+    "globals": "15.11.0",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3",
+    "typescript-eslint": "8.12.2",
+    "vite": "5.4.10",
+    "vitest": "2.1.4"
+  }
+}
