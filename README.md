@@ -15,7 +15,7 @@ app has never been opened in a browser, and there is no `package-lock.json` yet.
 check that is owed is listed in [`docs/DEFERRED-VALIDATION.md`](docs/DEFERRED-VALIDATION.md).
 This README makes no claim that anything works.
 
-What exists as source after milestone M1 (walking skeleton):
+What exists as source after milestones M1–M2:
 
 - Shared analysis core in `supabase/functions/_shared/core/` (pure TypeScript, zero dependencies,
   meant to run unchanged in the browser worker, Node and Deno):
@@ -23,18 +23,22 @@ What exists as source after milestone M1 (walking skeleton):
     unknown with a warning), inventory CSV with column mapping, input caps.
   - `spdxexpr/`: SPDX expression lexer, parser, normaliser (aliases, legacy forms, deprecated ids,
     alias guards), `-or-later` expansion and the OR/AND/WITH evaluator.
-  - `rules/`: the frozen catalogue of 29 licences and 3 exceptions, and a **stub** rule table
-    (rules edition `2026-10-24.m1-stub`): only the unknown, source-available, dev-not-shipped,
-    internal and hosted rules are implemented; every other combination is reported as
-    `needs_review` (`R-FALLBACK`). The full rule table is milestone M2.
+  - `rules/`: frozen catalogue of 29 licences and 3 exceptions, full 39-rule precedence ladder
+    (edition `2026-10-24.m2`), explicit obligations, assumptions, options and passage policies.
+    See [`docs/RULES.md`](docs/RULES.md).
+  - Partial GNU corpus (GPL2, GPL3, LGPL2.1) and OSADL snapshot with per-file provenance.
+    AGPL3, LGPL3 and GCC3.1 downloads timed out; quote coverage is incomplete and the AGPL
+    quoted demo is unavailable pending D18. Other documents remain template-only.
   - `util/sha256.ts` (synchronous, pure TS), `report/json.ts` (JSON export).
 - React + Vite UI in `src/`: demo-mode banner, file drop and sample loader, settings form (Analyze
   stays disabled until project licence, mode and bundled are chosen), flat report with paths, rule
   ids and chosen OR side, rule-table "template" explanations, JSON export, disclaimer.
 - Test source (vitest, not yet run) in `tests/`.
-- Synthetic demo fixtures in `fixtures/trees/dev/`.
+- Three dev trees, three heldout trees and the demo expression-change companion, 79 authored
+  verdict cases, frozen family splits and an OSADL-derived case builder. OSADL disagreements
+  are provisional until the agreement test runs; see `docs/OSADL-DISAGREEMENTS.md`.
 
-Not built yet: full rules and OSADL oracle (M2), rulings, Markdown export, CSV mapping UI and
+Not built yet: rulings, Markdown export, CSV mapping UI and
 sign-in (M3), model explanations with verified quotes and the budget-capped edge function (M4),
 evaluation and hand-off documents (M5).
 

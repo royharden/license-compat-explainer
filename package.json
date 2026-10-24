@@ -12,7 +12,9 @@
     "typecheck": "tsc -b",
     "lint": "eslint .",
     "test": "vitest run",
-    "check:syntax": "node --experimental-vm-modules --no-warnings scripts/static-syntax-check.mjs"
+    "check:syntax": "node --experimental-vm-modules --no-warnings scripts/static-syntax-check.mjs",
+    "rules:doc": "tsx scripts/gen-rules-doc.ts",
+    "split:verify": "tsx scripts/split.ts --verify"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.45.4",

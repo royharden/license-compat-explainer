@@ -1,0 +1,120 @@
+{
+  "fixture": "hosted-gpl3-platform.package-lock.json",
+  "split": "heldout",
+  "origin": "author",
+  "synthetic": true,
+  "settings": {
+    "projectLicense": "GPL-3.0-only",
+    "mode": "hosted",
+    "bundled": false,
+    "acknowledgements": {
+      "unmodified_use": false,
+      "mpl_secondary_eligible": false
+    }
+  },
+  "writtenAgainstRulesEdition": "2026-10-24.m2",
+  "expectedCoverageGaps": 0,
+  "expected": [
+    {
+      "location": "node_modules/relay",
+      "name": "relay",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay"
+      ],
+      "verdict": "ok",
+      "ruleIds": [
+        "R-PERM-HOSTED"
+      ]
+    },
+    {
+      "location": "node_modules/relay/node_modules/remote-ledger",
+      "name": "remote-ledger",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "remote-ledger"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-NET-GPL3-COMBINATION"
+      ],
+      "trap": "remote-ledger",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/dual-renderer",
+      "name": "dual-renderer",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "dual-renderer"
+      ],
+      "verdict": "ok",
+      "ruleIds": [
+        "R-PERM-HOSTED"
+      ],
+      "trap": "dual-renderer",
+      "origin": "author",
+      "chosenSide": "MIT"
+    },
+    {
+      "location": "node_modules/relay/node_modules/build-checker",
+      "name": "build-checker",
+      "version": "1.0.0",
+      "scope": "dev",
+      "path": [
+        "root",
+        "relay",
+        "build-checker"
+      ],
+      "verdict": "ok",
+      "ruleIds": [
+        "R-DEV-NOT-SHIPPED"
+      ],
+      "trap": "build-checker",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/no-metadata",
+      "name": "no-metadata",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "no-metadata"
+      ],
+      "verdict": "unknown",
+      "ruleIds": [
+        "R-UNKNOWN-UNRESOLVED"
+      ],
+      "trap": "no-metadata",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/restricted-index",
+      "name": "restricted-index",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "restricted-index"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-SA-REVIEW"
+      ],
+      "trap": "restricted-index",
+      "origin": "author"
+    }
+  ],
+  "scenarios": []
+}

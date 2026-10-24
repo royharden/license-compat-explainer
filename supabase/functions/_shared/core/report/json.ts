@@ -1,8 +1,9 @@
-// JSON export (PLAN §7.3; M1 subset). Contains settings incl. acknowledgements (labelled
+// JSON export (PLAN Â§7.3; M1 subset). Contains settings incl. acknowledgements (labelled
 // user-asserted), rules edition and stub flag, verdicts with rule ids, paths/rows, the template
 // explanation label and the disclaimer. Rulings arrive in M3, OSADL attribution once the matrix is
 // vendored (M2/M3); neither is claimed here before it exists.
 
+import { OSADL_ATTRIBUTION } from '../data/osadlAttribution.ts';
 import type { AnalysisResult, Finding } from '../types.ts';
 import { ACKNOWLEDGEMENTS_LABEL } from '../types.ts';
 import { DISCLAIMER, TEMPLATE_LABEL } from '../explain/disclaimer.ts';
@@ -16,6 +17,7 @@ export interface JsonExportFinding extends Finding {
 export interface JsonExport {
   format: typeof EXPORT_FORMAT;
   generatedAt: string;
+  osadlAttribution: string;
   disclaimer: string;
   rulesEdition: string;
   rulesStub: boolean;
@@ -41,6 +43,7 @@ export function buildJsonExport(result: AnalysisResult, generatedAt: string): Js
   return {
     format: EXPORT_FORMAT,
     generatedAt,
+    osadlAttribution: OSADL_ATTRIBUTION,
     disclaimer: DISCLAIMER,
     rulesEdition: result.rulesEdition,
     rulesStub: result.rulesStub,

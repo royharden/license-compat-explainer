@@ -1,0 +1,1 @@
+export const OSADL_ATTRIBUTION = 'OSADL Open Source License Compatibility Matrix © Open Source Automation Development Lab (OSADL), CC-BY-4.0, retrieved 2026-10-24, unmodified. https://www.osadl.org/fileadmin/checklists/matrix.csv';

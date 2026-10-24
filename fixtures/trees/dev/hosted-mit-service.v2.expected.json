@@ -5,7 +5,7 @@
   "split": "dev",
   "origin": "author",
   "synthetic": true,
-  "description": "Demo journey step 8 (PLAN §1.6): same packages, versions and install locations as the base tree; exactly one package's licence changed, so a ruling recorded against the base tree's expression becomes stale (expr_hash differs). Every other finding equals the base sidecar.",
+  "description": "Demo journey step 8 (PLAN \u00c2\u00a71.6): same packages, versions and install locations as the base tree; exactly one package's licence changed, so a ruling recorded against the base tree's expression becomes stale (expr_hash differs). Every other finding equals the base sidecar.",
   "settings": {
     "projectLicense": "MIT",
     "mode": "hosted",
@@ -15,7 +15,7 @@
       "mpl_secondary_eligible": false
     }
   },
-  "writtenAgainstRulesEdition": "2026-10-24.m1-stub",
+  "writtenAgainstRulesEdition": "2026-10-24.m2",
   "changed": {
     "location": "node_modules/sspl-db",
     "name": "sspl-db",
@@ -24,8 +24,19 @@
     "licenceAfter": "Elastic-2.0"
   },
   "expectedChanged": {
-    "m1": { "verdict": "needs_review", "ruleIds": ["R-SA-REVIEW"] },
-    "m2": { "verdict": "needs_review", "ruleIds": ["R-SA-REVIEW"], "changesInM2": false },
+    "m1": {
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-SA-REVIEW"
+      ]
+    },
+    "m2": {
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-SA-REVIEW"
+      ],
+      "changesInM2": false
+    },
     "exprHashChanged": true,
     "note": "The verdict is unchanged; only the expression (and so the ruling identity's expr_hash) changed."
   }

@@ -1,10 +1,10 @@
-// Demo journey step 4 on the dev tree with the M1 stub rules (PLAN §12 M1 g), plus stub-ladder checks.
+// Demo journey step 4 on the dev tree with the full M2 rules (PLAN §12 M1 g), plus ladder checks.
 import { describe, expect, it } from 'vitest';
 import { parsePackageLock } from '../supabase/functions/_shared/core/inputs/packageLock.ts';
 import { analyzeInventory } from '../supabase/functions/_shared/core/analyze.ts';
 import { evaluateLeaf } from '../supabase/functions/_shared/core/rules/engine.ts';
 import { RULES_ARE_STUB, RULES_EDITION, RULE_ROWS } from '../supabase/functions/_shared/core/rules/ruleTable.ts';
-import { STUB_RULE_IDS } from '../supabase/functions/_shared/core/rules/ruleIds.ts';
+import { ALL_RULE_IDS } from '../supabase/functions/_shared/core/rules/ruleIds.ts';
 import { LADDER } from '../supabase/functions/_shared/core/rules/ladder.ts';
 import { normaliseString } from '../supabase/functions/_shared/core/spdxexpr/normalise.ts';
 import { templateExplanation } from '../supabase/functions/_shared/core/explain/template.ts';
@@ -21,7 +21,7 @@ interface ExpectedFinding {
   scope: string;
   path: string[];
   m1: { verdict: Verdict; ruleIds: string[]; chosenSide?: string; reason?: string };
-  m2: { verdict: Verdict; ruleIds: string[]; changesInM2: boolean };
+  m2: { verdict: Verdict; ruleIds: string[]; changesInM2: boolean; chosenSide?: string; reason?: string };
 }
 
 interface Sidecar {
@@ -47,10 +47,10 @@ function at(result: AnalysisResult, location: string): Finding {
 
 const result = analyzeFixture('hosted-mit-service.package-lock.json');
 
-describe('dev tree hosted-mit-service under the M1 stub (demo journey step 4)', () => {
-  it('rules edition is the M1 stub', () => {
-    expect(RULES_EDITION).toContain('m1-stub');
-    expect(RULES_ARE_STUB).toBe(true);
+describe('dev tree hosted-mit-service under the full M2 rules (demo journey step 4)', () => {
+  it('rules edition is M2', () => {
+    expect(RULES_EDITION).toBe('2026-10-24.m2');
+    expect(RULES_ARE_STUB).toBe(false);
     expect(result.rulesEdition).toBe(RULES_EDITION);
   });
 
@@ -91,13 +91,13 @@ describe('dev tree hosted-mit-service under the M1 stub (demo journey step 4)', 
     expect(at(result, 'node_modules/sspl-db')).toMatchObject({ verdict: 'needs_review', ruleIds: ['R-SA-REVIEW'] });
   });
 
-  it('MPL-2.0 in hosted mode falls to the stub R-FALLBACK (changes to R-WEAK-HOSTED in M2)', () => {
+  it('MPL-2.0 in hosted mode carries R-WEAK-HOSTED obligations', () => {
     const f = at(result, 'node_modules/mpl-widget');
-    expect(f).toMatchObject({ verdict: 'needs_review', ruleIds: ['R-FALLBACK'], stubRule: true });
-    expect(result.fallbackCount).toBe(1);
+    expect(f).toMatchObject({ verdict: 'ok_with_conditions', ruleIds: ['R-WEAK-HOSTED'], stubRule: false });
+    expect(result.fallbackCount).toBe(0);
   });
 
-  it('every finding equals the sidecar m1 expectation, and counts match', () => {
+  it('every finding equals the sidecar m2 expectation, and counts match', () => {
     expect(result.findings).toHaveLength(sidecar.expected.length);
     for (const e of sidecar.expected) {
       const f = at(result, e.location);
@@ -105,12 +105,12 @@ describe('dev tree hosted-mit-service under the M1 stub (demo journey step 4)', 
       expect(f.version, e.location).toBe(e.version);
       expect(f.scope, e.location).toBe(e.scope);
       expect(f.path, e.location).toEqual(e.path);
-      expect(f.verdict, e.location).toBe(e.m1.verdict);
-      expect(f.ruleIds, e.location).toEqual(e.m1.ruleIds);
-      if (e.m1.chosenSide !== undefined) expect(f.chosenSide, e.location).toBe(e.m1.chosenSide);
-      if (e.m1.reason !== undefined) expect(f.reason, e.location).toBe(e.m1.reason);
+      expect(f.verdict, e.location).toBe(e.m2.verdict);
+      expect(f.ruleIds, e.location).toEqual(e.m2.ruleIds);
+      if (e.m2.chosenSide !== undefined) expect(f.chosenSide, e.location).toBe(e.m2.chosenSide);
+      if (e.m2.reason !== undefined) expect(f.reason, e.location).toBe(e.m2.reason);
     }
-    expect(result.counts).toEqual(sidecar.expectedCounts.m1);
+    expect(result.counts).toEqual(sidecar.expectedCounts.m2);
     expect(result.coverageGaps).toHaveLength(sidecar.expectedCoverageGaps);
   });
 
@@ -152,21 +152,21 @@ describe('v2 fixture (journey step 8)', () => {
   });
 });
 
-describe('stub ladder', () => {
+describe('full ladder', () => {
   const leaf = (s: string): LeafRef => {
     const n = normaliseString(s);
     if (!n.expr || n.expr.type !== 'leaf') throw new Error('expected single leaf');
     return n.expr.leaf;
   };
 
-  it('every ladder rule id and R-FALLBACK has a row; rows exist only for the stub ids', () => {
+  it('every ladder rule id and R-FALLBACK has a row; rows exist for all declared ids', () => {
     for (const step of LADDER) expect(RULE_ROWS.has(step.ruleId), step.ruleId).toBe(true);
-    expect([...RULE_ROWS.keys()].sort()).toEqual([...STUB_RULE_IDS].sort());
+    expect([...RULE_ROWS.keys()].sort()).toEqual([...ALL_RULE_IDS].sort());
   });
 
-  it('exception leaves stop at the stub guard before dev/internal/hosted rules', () => {
+  it('exception leaves stop at context eligibility before dev/internal/hosted rules', () => {
     const r = evaluateLeaf(leaf('GPL-2.0-only WITH Classpath-exception-2.0'), { settings: settings({ mode: 'internal' }), scope: 'runtime' });
-    expect(r.ruleId).toBe('R-FALLBACK');
+    expect(r.ruleId).toBe('R-EXC-CONTEXT');
   });
 
   it('restricted licences are needs_review even as dev dependencies and in internal mode', () => {
@@ -176,12 +176,12 @@ describe('stub ladder', () => {
   });
 
   it('unknown scope never takes the dev exemption', () => {
-    expect(evaluateLeaf(leaf('GPL-3.0-only'), { settings: settings({ mode: 'distribute' }), scope: 'unknown' }).ruleId).toBe('R-FALLBACK');
+    expect(evaluateLeaf(leaf('GPL-3.0-only'), { settings: settings({ mode: 'distribute' }), scope: 'unknown' }).ruleId).toBe('R-DIST-STRONG');
   });
 
-  it('hosted network copyleft into AGPL or GPL-3.0 projects is left to M2 (fallback, not conflict)', () => {
+  it('hosted network copyleft into AGPL and GPL3 uses distinct full rules', () => {
     for (const projectLicense of ['AGPL-3.0-only', 'GPL-3.0-only'] as const) {
-      expect(evaluateLeaf(leaf('AGPL-3.0-only'), { settings: settings({ projectLicense }), scope: 'runtime' }).ruleId).toBe('R-FALLBACK');
+      expect(evaluateLeaf(leaf('AGPL-3.0-only'), { settings: settings({ projectLicense }), scope: 'runtime' }).ruleId).toBe(projectLicense === 'AGPL-3.0-only' ? 'R-NET-HOSTED-AGPL' : 'R-NET-GPL3-COMBINATION');
     }
   });
 
@@ -203,7 +203,7 @@ describe('template explanation and JSON export', () => {
     const doc = buildJsonExport(result, '2026-10-24T00:00:00.000Z');
     expect(doc.settings.acknowledgements).toEqual({ unmodified_use: false, mpl_secondary_eligible: false });
     expect(doc.acknowledgementsLabel).toBe('user-asserted, not verified from source');
-    expect(doc.rulesStub).toBe(true);
+    expect(doc.rulesStub).toBe(false);
     expect(doc.disclaimer).toBe(DISCLAIMER);
     expect(doc.findings.every((f) => f.explanation.label === 'template')).toBe(true);
     expect(doc.settingsHash).toBe(settingsHash(sidecar.settings));

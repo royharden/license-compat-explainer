@@ -1,0 +1,363 @@
+{
+  "fixture": "gpl3-library.package-lock.json",
+  "split": "dev",
+  "origin": "author",
+  "synthetic": true,
+  "settings": {
+    "projectLicense": "GPL-3.0-only",
+    "mode": "library",
+    "bundled": false,
+    "acknowledgements": {
+      "unmodified_use": true,
+      "mpl_secondary_eligible": true
+    }
+  },
+  "writtenAgainstRulesEdition": "2026-10-24.m2",
+  "expectedCoverageGaps": 0,
+  "expected": [
+    {
+      "location": "node_modules/gpl2-version-only",
+      "name": "gpl2-version-only",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "gpl2-version-only"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-LIB-UNBUNDLED-COPYLEFT"
+      ],
+      "trap": "GPL2-only library unbundled reviewed before pair; bundled conflict",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/gpl2-or-later",
+      "name": "gpl2-or-later",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "gpl2-or-later"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-LIB-UNBUNDLED-COPYLEFT"
+      ],
+      "trap": "or-later selects GPL3 when bundled",
+      "origin": "author",
+      "chosenSide": "GPL-2.0-only"
+    },
+    {
+      "location": "node_modules/apache-notices",
+      "name": "apache-notices",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "apache-notices"
+      ],
+      "verdict": "ok",
+      "ruleIds": [
+        "R-LIB-UNBUNDLED-PERM"
+      ],
+      "trap": "Apache into GPL2 conflict vs GPL3 conditions",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/network-part",
+      "name": "network-part",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "network-part"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-LIB-UNBUNDLED-COPYLEFT"
+      ],
+      "trap": "AGPL into hosted GPL3 is review, not conflict",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/mpl-part",
+      "name": "mpl-part",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "mpl-part"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-LIB-UNBUNDLED-WEAK"
+      ],
+      "trap": "mpl-part",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/epl-part",
+      "name": "epl-part",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "epl-part"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-LIB-UNBUNDLED-WEAK"
+      ],
+      "trap": "epl-part",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/lgpl-part",
+      "name": "lgpl-part",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "lgpl-part"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-LIB-UNBUNDLED-WEAK"
+      ],
+      "trap": "lgpl-part",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/exception-part",
+      "name": "exception-part",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "exception-part"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-EXC-CLASSPATH"
+      ],
+      "trap": "Classpath acknowledged look-alike never base conflict",
+      "origin": "author"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "bundled-library-exact-pairs",
+      "settings": {
+        "projectLicense": "GPL-3.0-only",
+        "mode": "library",
+        "bundled": true,
+        "acknowledgements": {
+          "unmodified_use": true,
+          "mpl_secondary_eligible": true
+        }
+      },
+      "expected": [
+        {
+          "location": "node_modules/gpl2-version-only",
+          "verdict": "conflict",
+          "ruleIds": [
+            "R-PAIR-GPL2ONLY-GPL3"
+          ]
+        },
+        {
+          "location": "node_modules/gpl2-or-later",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-PAIR-GPL-SAME"
+          ],
+          "chosenSide": "GPL-3.0-only"
+        },
+        {
+          "location": "node_modules/apache-notices",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-PAIR-APACHE-GPL3"
+          ]
+        },
+        {
+          "location": "node_modules/network-part",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-NET-GPL3-COMBINATION"
+          ]
+        },
+        {
+          "location": "node_modules/mpl-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-PAIR-MPL-GPL"
+          ]
+        },
+        {
+          "location": "node_modules/epl-part",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-PAIR-EPL-GPL"
+          ]
+        },
+        {
+          "location": "node_modules/lgpl-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-PAIR-LGPL-GPL"
+          ]
+        },
+        {
+          "location": "node_modules/exception-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-EXC-CLASSPATH"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hosted-gpl3-network-combination",
+      "settings": {
+        "projectLicense": "GPL-3.0-only",
+        "mode": "hosted",
+        "bundled": false,
+        "acknowledgements": {
+          "unmodified_use": true,
+          "mpl_secondary_eligible": true
+        }
+      },
+      "expected": [
+        {
+          "location": "node_modules/gpl2-version-only",
+          "verdict": "ok",
+          "ruleIds": [
+            "R-STRONG-HOSTED"
+          ]
+        },
+        {
+          "location": "node_modules/gpl2-or-later",
+          "verdict": "ok",
+          "ruleIds": [
+            "R-STRONG-HOSTED"
+          ],
+          "chosenSide": "GPL-2.0-only"
+        },
+        {
+          "location": "node_modules/apache-notices",
+          "verdict": "ok",
+          "ruleIds": [
+            "R-PERM-HOSTED"
+          ]
+        },
+        {
+          "location": "node_modules/network-part",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-NET-GPL3-COMBINATION"
+          ]
+        },
+        {
+          "location": "node_modules/mpl-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-WEAK-HOSTED"
+          ]
+        },
+        {
+          "location": "node_modules/epl-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-WEAK-HOSTED"
+          ]
+        },
+        {
+          "location": "node_modules/lgpl-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-WEAK-HOSTED"
+          ]
+        },
+        {
+          "location": "node_modules/exception-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-EXC-CLASSPATH"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "apache-gpl2-conflict-and-A5-version-only-cells",
+      "settings": {
+        "projectLicense": "GPL-2.0-only",
+        "mode": "distribute",
+        "bundled": false,
+        "acknowledgements": {
+          "unmodified_use": true,
+          "mpl_secondary_eligible": true
+        }
+      },
+      "expected": [
+        {
+          "location": "node_modules/gpl2-version-only",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-SAME-LICENCE"
+          ]
+        },
+        {
+          "location": "node_modules/gpl2-or-later",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-SAME-LICENCE"
+          ],
+          "chosenSide": "GPL-2.0-only"
+        },
+        {
+          "location": "node_modules/apache-notices",
+          "verdict": "conflict",
+          "ruleIds": [
+            "R-PAIR-APACHE-GPL2"
+          ]
+        },
+        {
+          "location": "node_modules/network-part",
+          "verdict": "conflict",
+          "ruleIds": [
+            "R-DIST-NET"
+          ]
+        },
+        {
+          "location": "node_modules/mpl-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-PAIR-MPL-GPL"
+          ]
+        },
+        {
+          "location": "node_modules/epl-part",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-PAIR-EPL-GPL"
+          ]
+        },
+        {
+          "location": "node_modules/lgpl-part",
+          "verdict": "conflict",
+          "ruleIds": [
+            "R-PAIR-LGPL3-GPL2ONLY"
+          ]
+        },
+        {
+          "location": "node_modules/exception-part",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-EXC-CLASSPATH"
+          ]
+        }
+      ]
+    }
+  ]
+}
