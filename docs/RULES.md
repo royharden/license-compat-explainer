@@ -492,3 +492,38 @@ Passages: Template-only: no applicable verified corpus passage; see `data/PROVEN
 `providers.complete(request): Promise<{text, usage: {input_tokens, output_tokens} | null, model, provider}>`; `callledger.record(row)` stores a server-side ledger row (mock uses an in-memory twin); `rulings.append(event)` and `rulings.replay(findings, events)` append/replay overlays without changing verdicts; evalkit supplies results writers and confusion-matrix helpers in `scripts/eval/`. Implemented in later milestones.
 
 `R-RESTRICTED-REVIEW` is a documentation alias for `R-SA-REVIEW`, never an emitted id.
+# M4 adapter contracts (source-only, unexecuted)
+
+`providers.complete(preparedRequest)` returns `{text, usage: {input_tokens, output_tokens} | null,
+model, provider}`. `prepare` serializes the entire request before reservation; provider transport is
+injected, and only the edge function supplies network access. Configured and returned model must
+match exactly for known-cost settlement. TypeSafe is an interface slot only. Browser mock replays
+`fixtures/mock/explain/index.json` by readable `<rule_id>__<scenario>` keys; default demos cover
+`R-STRONG-HOSTED` and `R-DIST-STRONG` using available GPL3 text. Other mock keys fail to templates.
+AGPL demo is unavailable (D18). Mock and server `callledger.record(row)` use the same `LedgerRow`
+shape in `explain/service.ts`; mock has zero cost and only in-memory state.
+
+`rulings.append` remains append-only in the browser store; `rulings.replay` returns review overlays
+without changing engine output. `evalkit` helpers are M5 scope. No model output may supply verdicts
+or options. Summary polarity checks remain heuristics, not legal-semantic verification. Every
+displayed quote is a source span rechecked at render time.
+
+## Closed summary vocabulary (`quote-guard@2`)
+
+No full pinned SPDX licence/exception identifier vocabulary is vendored. The summary guard instead
+uses the small closed English prose vocabulary in `explain/guard.ts`. It accepts only those prose
+words (case-insensitively), canonical-case licence/exception IDs from the re-derived `Facts.licenceIds`,
+and the exact operators `AND`, `OR`, `WITH`. Every character is consumed: letters/digits with internal
+dots/hyphens form one exact token; whitespace and `. , ; : ! ? ( ) ' "` separate tokens; every other
+character fails closed. A name cannot pass merely because it lacks a version or looks like prose.
+No arbitrary word or hyphenated-name pattern is accepted. IDs absent from the facts, including
+unversioned `WTFPL`, `PostgreSQL`, `OpenSSL`, `curl` and `LLVM-exception`, fall back to a labelled
+template. This is a closed-vocabulary fallback, not a claim to classify the full SPDX list.
+
+The conservative vocabulary intentionally rejects benign synonyms, unfamiliar title/lowercase
+words, non-English prose, altered-case IDs, ordinary hyphenated words and unsupported punctuation.
+For example, `Consult the licensing team.` falls back even though it names no licence. The current
+neutral GPL mock summaries stay within the vocabulary; quote validation and canonical spans are
+unchanged. The server, browser and every cache read share this guard. `GUARD_VERSION` is included
+in the cache key, so version 1 entries cannot be reused as version 2 entries; any vocabulary change
+requires another version bump. Summary legal meaning is still not verified.

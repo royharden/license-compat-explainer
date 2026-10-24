@@ -1,0 +1,4 @@
+[functions.explain]
+# Deliberately public paid endpoint; atomic global day cap is the spending boundary.
+# Provisioning must verify gateway behavior for the actual public key model (D3).
+verify_jwt = false

@@ -3,12 +3,14 @@ import type { Acknowledgements, Finding, Settings } from '@core/types.ts';
 import { OPTION_LABELS } from '@core/explain/options.ts';
 import { RulingControls } from './RulingControls.tsx';
 import type { RulingControlsProps } from './RulingControls.tsx';
-import { TemplatePanel } from './TemplatePanel.tsx';
+import { ExplanationPanel } from './ExplanationPanel.tsx';
+import type { Explanation } from '@core/explain/guard.ts';
 import { VERDICT_LABELS, formatPath, formatWhere } from './reportView.ts';
 
-export function FindingCard({ finding, settings, rulingControls, onAcknowledge }: {
+export function FindingCard({ finding, settings, rulingControls, onAcknowledge, rulesEdition, runId, onExplanation }: {
   finding: Finding; settings: Settings; rulingControls: RulingControlsProps;
   onAcknowledge: (key: keyof Acknowledgements) => void;
+  rulesEdition: string; runId: string; onExplanation: (explanation: Explanation) => void;
 }) {
   const [open, setOpen] = useState(false);
   const showLeaves = finding.leaves.length > 1;
@@ -107,7 +109,8 @@ export function FindingCard({ finding, settings, rulingControls, onAcknowledge }
       <button type="button" className="link" aria-expanded={open} onClick={() => setOpen(!open)}>
         {open ? 'Hide explanation' : 'Show explanation'}
       </button>
-      {open && <TemplatePanel finding={finding} />}
+      <div hidden={!open}><ExplanationPanel finding={finding} settings={settings} rulesEdition={rulesEdition} runId={runId}
+        disabled={rulingControls.disabled} onExplanation={onExplanation} /></div>
       <RulingControls {...rulingControls} />
     </article>
   );

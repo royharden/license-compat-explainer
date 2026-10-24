@@ -1,13 +1,13 @@
 import type { Finding } from '@core/types.ts';
 import { templateExplanation } from '@core/explain/template.ts';
 
-/** Template explanation built from rule-table text only. No model is called in this build. */
+/** Always available deterministic rule explanation, independent of supplementary model prose. */
 export function TemplatePanel({ finding }: { finding: Finding }) {
   const t = templateExplanation(finding);
   return (
     <div className="explanation">
       <p className="explanation-label">
-        <span className="badge template">{t.label}</span> rule-table text; model explanations are not built yet
+        <span className="badge template">{t.label}</span> rule-table text
       </p>
       {t.sections.map((s) => (
         <div key={s.ruleId} className="explanation-section">

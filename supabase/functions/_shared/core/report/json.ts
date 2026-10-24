@@ -7,11 +7,12 @@ import { DISCLAIMER, TEMPLATE_LABEL } from '../explain/disclaimer.ts';
 import type { Ruling } from '../rulings/key.ts';
 import { classifyRuling, compareRulings, replayRulings } from '../rulings/replay.ts';
 import type { RulingStatus } from '../rulings/replay.ts';
+import type { Explanation } from '../explain/guard.ts';
 
 export const EXPORT_FORMAT = 'license-compat-explainer/report@1';
 
 export interface JsonExportFinding extends Finding {
-  explanation: { label: typeof TEMPLATE_LABEL; fallbackReason: 'explanations_not_built' };
+  explanation: Explanation;
 }
 
 export interface JsonExport {
@@ -43,12 +44,12 @@ export interface ExportRuling {
   applied: boolean;
 }
 
-export function buildJsonExport(result: AnalysisResult, generatedAt: string, projectKey = result.input.rootName ?? 'inventory', entries: readonly Ruling[] = []): JsonExport {
+export function buildJsonExport(result: AnalysisResult, generatedAt: string, projectKey = result.input.rootName ?? 'inventory', entries: readonly Ruling[] = [], explanations: Readonly<Record<string, Explanation>> = {}): JsonExport {
   const notes: string[] = [];
   if (result.rulesStub) {
     notes.push('Rules are the M1 stub table: combinations outside the implemented rules are reported as needs_review (R-FALLBACK).');
   }
-  notes.push('Explanations are rule-table templates; no model was called.');
+  notes.push('Explanations are labelled per finding. Supplementary model summaries are not checked for legal meaning; quotations are checked against offered vendored passages.');
   notes.push('Rulings are review overlays and never change engine verdicts. Only the latest matching event may apply.');
   const latest = replayRulings(entries, projectKey, result);
   const rulings: ExportRuling[] = entries.filter((entry) => entry.project_key === projectKey.trim()).sort(compareRulings).map((event) => {
@@ -75,7 +76,7 @@ export function buildJsonExport(result: AnalysisResult, generatedAt: string, pro
     warnings: result.warnings,
     findings: result.findings.map((f): JsonExportFinding => ({
       ...f,
-      explanation: { label: TEMPLATE_LABEL, fallbackReason: 'explanations_not_built' },
+      explanation: explanations[f.findingId] ?? { label: TEMPLATE_LABEL, fallbackReason: 'not_requested', droppedQuotes: 0, disclaimer: DISCLAIMER },
     })),
     projectKey: projectKey.trim(),
     rulings,

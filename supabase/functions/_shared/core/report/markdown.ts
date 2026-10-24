@@ -28,10 +28,11 @@ export function buildMarkdownExport(doc: JsonExport): string {
         `Path: ${e(f.path?.join(' > ') ?? f.pathNote ?? 'path unavailable')}; location: ${e(f.location ?? 'unavailable')}; source row: ${f.sourceRow ?? 'unavailable'}.`,
         `Licence as written: ${e(f.rawLicence)}; normalised: ${e(f.exprNormalised ?? `unresolved (${f.reason ?? 'unknown'})`)}.`,
         `Chosen OR side: ${e(f.chosenSide ?? 'none')}.`,
-        `Explanation label: ${e(f.explanation.label)}; ${e(f.explanation.fallbackReason)}.`, '',
+        `Explanation label: ${e(f.explanation.label)}; ${e(f.explanation.fallbackReason ?? 'quotes verified; summary not checked for legal meaning')}; dropped quotes: ${f.explanation.droppedQuotes}.`, '',
         'Obligations:', ...(f.obligations.length ? f.obligations.map((item) => `- ${e(item)}`) : ['- None identified by the modelled rule.']), '',
         'Assumptions:', ...(f.assumptions.length ? f.assumptions.map((item) => `- ${e(item)}`) : ['- None listed.']), '',
         'Options to review:', ...(f.options.length ? f.options.map((id) => `- ${e(OPTION_LABELS[id])}`) : ['- None listed.']), '');
+      if (f.explanation.label === 'model') lines.push(e(f.explanation.summary), '', ...f.explanation.quotes.map(q => `> ${e(q.text)} (${e(q.passage_id)})`), '');
       for (const overlay of doc.rulings.filter((item) => item.event.occurrence === f.occurrence)) {
         lines.push(`Review event: ${e(overlay.event.action)} (${e(overlay.event.kind)}); ${e(overlay.status)}; latest=${overlay.latest}; applied=${overlay.applied}.`,
           `Reason: ${e(overlay.event.reason || 'No reason supplied.')}`, `Recorded: ${e(overlay.event.created_at)}; id: ${e(overlay.event.id)}.`,

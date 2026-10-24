@@ -1,3 +1,5 @@
+import { useMemo, useState } from 'react';
+import type { Explanation } from '@core/explain/guard.ts';
 import type { Acknowledgements, AnalysisResult, Finding, Settings } from '@core/types.ts';
 import type { Ruling, RulingAction } from '@core/rulings/key.ts';
 import { replayRulings, compareRulings } from '@core/rulings/replay.ts';
@@ -21,6 +23,9 @@ export function Report({
   onAcknowledge: (key: keyof Acknowledgements) => void;
   onRuling: (finding: Finding, action: RulingAction, reason: string) => void;
 }) {
+  const runId = useMemo(() => crypto.randomUUID(), [result]);
+  const [savedExplanations, setExplanations] = useState<{ result: AnalysisResult; entries: Record<string, Explanation> }>({ result, entries: {} });
+  const explanations = savedExplanations.result === result ? savedExplanations.entries : {};
   const settingsChanged = currentSettings === null || !sameSettings(currentSettings, result.settings);
   const findings = sortFindings(result.findings);
   const overlays = replayRulings(rulings, projectKey, result);
@@ -58,7 +63,7 @@ export function Report({
           </p>
         )}
         {inputChanged && <p className="notice" role="status">Input or CSV mapping changed. Analyze again before recording a ruling or acknowledgement.</p>}
-        <ExportButtons result={result} projectKey={projectKey} rulings={rulings} />
+        <ExportButtons result={result} projectKey={projectKey} rulings={rulings} explanations={explanations} />
       </div>
 
       {result.warnings.length > 0 && (
@@ -92,7 +97,9 @@ export function Report({
         return group.length > 0 && <section key={verdict} aria-label={`${VERDICT_LABELS[verdict]} findings`}>
           <h3>{VERDICT_LABELS[verdict]} ({group.length})</h3>
           <ol className="findings">{group.map((finding) => <li key={finding.findingId}>
-            <FindingCard finding={finding} settings={result.settings} onAcknowledge={onAcknowledge}
+            <FindingCard key={`${runId}:${finding.findingId}`} finding={finding} settings={result.settings} onAcknowledge={onAcknowledge}
+              runId={runId} rulesEdition={result.rulesEdition}
+              onExplanation={(explanation) => setExplanations(previous => ({ result, entries: { ...(previous.result === result ? previous.entries : {}), [finding.findingId]: explanation } }))}
               rulingControls={{ overlay: overlays.find((overlay) => overlay.occurrence === finding.occurrence), disabled,
                 history: rulings.filter((ruling) => ruling.project_key === projectKey.trim() && ruling.occurrence === finding.occurrence).sort(compareRulings),
                 onRuling: (action, reason) => onRuling(finding, action, reason) }} />
