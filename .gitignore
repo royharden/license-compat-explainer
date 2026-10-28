@@ -8,3 +8,18 @@ coverage/
 .vite/
 npm-debug.log*
 .DS_Store
+
+# Local credentials and generated artifacts
+.env.*
+!.env.example
+.creds/
+ArchiveManager-creds.txt
+*.pem
+*.key
+*.p12
+*.pfx
+*.zip
+*.7z
+*.tar.gz
+.cache/
+__pycache__/
