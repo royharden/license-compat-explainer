@@ -1,21 +1,24 @@
-// JSON export (PLAN §7.3; M1 subset). Contains settings incl. acknowledgements (labelled
-// user-asserted), rules edition and stub flag, verdicts with rule ids, paths/rows, the template
-// explanation label and the disclaimer. Rulings arrive in M3, OSADL attribution once the matrix is
-// vendored (M2/M3); neither is claimed here before it exists.
+// JSON export: engine output and independently classified review events. A ruling is an overlay.
 
+import { OSADL_ATTRIBUTION } from '../data/osadlAttribution.ts';
 import type { AnalysisResult, Finding } from '../types.ts';
 import { ACKNOWLEDGEMENTS_LABEL } from '../types.ts';
 import { DISCLAIMER, TEMPLATE_LABEL } from '../explain/disclaimer.ts';
+import type { Ruling } from '../rulings/key.ts';
+import { classifyRuling, compareRulings, replayRulings } from '../rulings/replay.ts';
+import type { RulingStatus } from '../rulings/replay.ts';
+import type { Explanation } from '../explain/guard.ts';
 
 export const EXPORT_FORMAT = 'license-compat-explainer/report@1';
 
 export interface JsonExportFinding extends Finding {
-  explanation: { label: typeof TEMPLATE_LABEL; fallbackReason: 'explanations_not_built' };
+  explanation: Explanation;
 }
 
 export interface JsonExport {
   format: typeof EXPORT_FORMAT;
   generatedAt: string;
+  osadlAttribution: string;
   disclaimer: string;
   rulesEdition: string;
   rulesStub: boolean;
@@ -28,19 +31,38 @@ export interface JsonExport {
   coverageGaps: AnalysisResult['coverageGaps'];
   warnings: AnalysisResult['warnings'];
   findings: JsonExportFinding[];
-  rulings: [];
+  projectKey: string;
+  rulings: ExportRuling[];
   notes: string[];
 }
 
-export function buildJsonExport(result: AnalysisResult, generatedAt: string): JsonExport {
+export interface ExportRuling {
+  event: Ruling;
+  status: RulingStatus | 'not_in_report';
+  differences: string[];
+  latest: boolean;
+  applied: boolean;
+}
+
+export function buildJsonExport(result: AnalysisResult, generatedAt: string, projectKey = result.input.rootName ?? 'inventory', entries: readonly Ruling[] = [], explanations: Readonly<Record<string, Explanation>> = {}): JsonExport {
   const notes: string[] = [];
   if (result.rulesStub) {
     notes.push('Rules are the M1 stub table: combinations outside the implemented rules are reported as needs_review (R-FALLBACK).');
   }
-  notes.push('Explanations are rule-table templates; no model was called.');
+  notes.push('Explanations are labelled per finding. Supplementary model summaries are not checked for legal meaning; quotations are checked against offered vendored passages.');
+  notes.push('Rulings are review overlays and never change engine verdicts. Only the latest matching event may apply.');
+  const latest = replayRulings(entries, projectKey, result);
+  const rulings: ExportRuling[] = entries.filter((entry) => entry.project_key === projectKey.trim()).sort(compareRulings).map((event) => {
+    const finding = result.findings.find((item) => item.occurrence === event.occurrence);
+    const overlay = finding ? classifyRuling(event, finding, result) : null;
+    const isLatest = latest.some((item) => item.ruling.id === event.id);
+    return { event, status: overlay?.status ?? 'not_in_report', differences: overlay?.differences ?? ['Occurrence is absent from this report.'],
+      latest: isLatest, applied: isLatest && overlay?.status === 'applicable' };
+  });
   return {
     format: EXPORT_FORMAT,
     generatedAt,
+    osadlAttribution: OSADL_ATTRIBUTION,
     disclaimer: DISCLAIMER,
     rulesEdition: result.rulesEdition,
     rulesStub: result.rulesStub,
@@ -54,9 +76,10 @@ export function buildJsonExport(result: AnalysisResult, generatedAt: string): Js
     warnings: result.warnings,
     findings: result.findings.map((f): JsonExportFinding => ({
       ...f,
-      explanation: { label: TEMPLATE_LABEL, fallbackReason: 'explanations_not_built' },
+      explanation: explanations[f.findingId] ?? { label: TEMPLATE_LABEL, fallbackReason: 'not_requested', droppedQuotes: 0, disclaimer: DISCLAIMER },
     })),
-    rulings: [],
+    projectKey: projectKey.trim(),
+    rulings,
     notes,
   };
 }

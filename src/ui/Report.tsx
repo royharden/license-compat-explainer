@@ -1,20 +1,35 @@
-import type { AnalysisResult, Settings } from '@core/types.ts';
+import { useMemo, useState } from 'react';
+import type { Explanation } from '@core/explain/guard.ts';
+import type { Acknowledgements, AnalysisResult, Finding, Settings } from '@core/types.ts';
+import type { Ruling, RulingAction } from '@core/rulings/key.ts';
+import { replayRulings, compareRulings } from '@core/rulings/replay.ts';
 import { ExportButtons } from './ExportButtons.tsx';
 import { FindingCard } from './FindingCard.tsx';
-import { formatAcknowledgements, formatSettings, sortFindings, summaryLine } from './reportView.ts';
+import { VERDICT_DISPLAY_ORDER, VERDICT_LABELS, formatAcknowledgements, formatSettings, sortFindings, summaryLine } from './reportView.ts';
 import { sameSettings } from './settingsState.ts';
 
 export function Report({
   result,
   elapsedMs,
   currentSettings,
+  projectKey, rulings, inputChanged, onAcknowledge, onRuling,
 }: {
   result: AnalysisResult;
   elapsedMs: number;
   currentSettings: Settings | null;
+  projectKey: string;
+  rulings: readonly Ruling[];
+  inputChanged: boolean;
+  onAcknowledge: (key: keyof Acknowledgements) => void;
+  onRuling: (finding: Finding, action: RulingAction, reason: string) => void;
 }) {
-  const settingsChanged = currentSettings !== null && !sameSettings(currentSettings, result.settings);
+  const runId = useMemo(() => crypto.randomUUID(), [result]);
+  const [savedExplanations, setExplanations] = useState<{ result: AnalysisResult; entries: Record<string, Explanation> }>({ result, entries: {} });
+  const explanations = savedExplanations.result === result ? savedExplanations.entries : {};
+  const settingsChanged = currentSettings === null || !sameSettings(currentSettings, result.settings);
   const findings = sortFindings(result.findings);
+  const overlays = replayRulings(rulings, projectKey, result);
+  const disabled = settingsChanged || inputChanged || !projectKey.trim();
   return (
     <section className="report" aria-labelledby="report-heading">
       <h2 id="report-heading">3. Report</h2>
@@ -47,7 +62,8 @@ export function Report({
             Settings changed since this report was produced. Analyze again to apply them.
           </p>
         )}
-        <ExportButtons result={result} />
+        {inputChanged && <p className="notice" role="status">Input or CSV mapping changed. Analyze again before recording a ruling or acknowledgement.</p>}
+        <ExportButtons result={result} projectKey={projectKey} rulings={rulings} explanations={explanations} />
       </div>
 
       {result.warnings.length > 0 && (
@@ -69,20 +85,27 @@ export function Report({
           <ul>
             {result.coverageGaps.map((g, i) => (
               <li key={`${g.kind}-${i}`}>
-                <code>{g.kind}</code>: {g.detail}
+                <code>{g.kind}</code>: {g.detail} {g.from ? `(from ${g.from})` : ''} {g.dependency ? `dependency: ${g.dependency}` : ''}
               </li>
             ))}
           </ul>
         </details>
       )}
 
-      <ol className="findings">
-        {findings.map((f) => (
-          <li key={f.findingId}>
-            <FindingCard finding={f} />
-          </li>
-        ))}
-      </ol>
+      {VERDICT_DISPLAY_ORDER.map((verdict) => {
+        const group = findings.filter((finding) => finding.verdict === verdict);
+        return group.length > 0 && <section key={verdict} aria-label={`${VERDICT_LABELS[verdict]} findings`}>
+          <h3>{VERDICT_LABELS[verdict]} ({group.length})</h3>
+          <ol className="findings">{group.map((finding) => <li key={finding.findingId}>
+            <FindingCard key={`${runId}:${finding.findingId}`} finding={finding} settings={result.settings} onAcknowledge={onAcknowledge}
+              runId={runId} rulesEdition={result.rulesEdition}
+              onExplanation={(explanation) => setExplanations(previous => ({ result, entries: { ...(previous.result === result ? previous.entries : {}), [finding.findingId]: explanation } }))}
+              rulingControls={{ overlay: overlays.find((overlay) => overlay.occurrence === finding.occurrence), disabled,
+                history: rulings.filter((ruling) => ruling.project_key === projectKey.trim() && ruling.occurrence === finding.occurrence).sort(compareRulings),
+                onRuling: (action, reason) => onRuling(finding, action, reason) }} />
+          </li>)}</ol>
+        </section>;
+      })}
     </section>
   );
 }

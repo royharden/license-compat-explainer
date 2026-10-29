@@ -1,0 +1,137 @@
+{
+  "fixture": "proprietary-appliance.package-lock.json",
+  "split": "heldout",
+  "origin": "author",
+  "synthetic": true,
+  "settings": {
+    "projectLicense": "LicenseRef-Proprietary",
+    "mode": "distribute",
+    "bundled": true,
+    "acknowledgements": {
+      "unmodified_use": false,
+      "mpl_secondary_eligible": false
+    }
+  },
+  "writtenAgainstRulesEdition": "2026-10-24.m2",
+  "expectedCoverageGaps": 0,
+  "expected": [
+    {
+      "location": "node_modules/relay",
+      "name": "relay",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-DIST-PERM"
+      ]
+    },
+    {
+      "location": "node_modules/relay/node_modules/linked-runtime",
+      "name": "linked-runtime",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "linked-runtime"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-PAIR-LGPL-PROPRIETARY-BUNDLED"
+      ],
+      "trap": "linked-runtime",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/compile-tool",
+      "name": "compile-tool",
+      "version": "1.0.0",
+      "scope": "dev",
+      "path": [
+        "root",
+        "relay",
+        "compile-tool"
+      ],
+      "verdict": "conflict",
+      "ruleIds": [
+        "R-DIST-STRONG"
+      ],
+      "trap": "compile-tool",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/two-obligations",
+      "name": "two-obligations",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "two-obligations"
+      ],
+      "verdict": "conflict",
+      "ruleIds": [
+        "R-DIST-PERM",
+        "R-DIST-STRONG"
+      ],
+      "trap": "two-obligations",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/restricted-search",
+      "name": "restricted-search",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "restricted-search"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-SA-REVIEW"
+      ],
+      "trap": "restricted-search",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/boost-confusion",
+      "name": "boost-confusion",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "boost-confusion"
+      ],
+      "verdict": "unknown",
+      "ruleIds": [
+        "R-UNKNOWN-UNRESOLVED"
+      ],
+      "trap": "boost-confusion",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/inject-note",
+      "name": "inject-note",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "inject-note"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-DIST-PERM"
+      ],
+      "trap": "inject-note",
+      "origin": "author"
+    }
+  ],
+  "scenarios": []
+}

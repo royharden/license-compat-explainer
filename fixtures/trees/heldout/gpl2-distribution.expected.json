@@ -1,0 +1,137 @@
+{
+  "fixture": "gpl2-distribution.package-lock.json",
+  "split": "heldout",
+  "origin": "author",
+  "synthetic": true,
+  "settings": {
+    "projectLicense": "GPL-2.0-only",
+    "mode": "distribute",
+    "bundled": false,
+    "acknowledgements": {
+      "unmodified_use": false,
+      "mpl_secondary_eligible": false
+    }
+  },
+  "writtenAgainstRulesEdition": "2026-10-24.m2",
+  "expectedCoverageGaps": 0,
+  "expected": [
+    {
+      "location": "node_modules/relay",
+      "name": "relay",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-DIST-PERM"
+      ]
+    },
+    {
+      "location": "node_modules/relay/node_modules/patent-grant",
+      "name": "patent-grant",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "patent-grant"
+      ],
+      "verdict": "conflict",
+      "ruleIds": [
+        "R-PAIR-APACHE-GPL2"
+      ],
+      "trap": "patent-grant",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/next-version",
+      "name": "next-version",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "next-version"
+      ],
+      "verdict": "conflict",
+      "ruleIds": [
+        "R-PAIR-GPL3-GPL2ONLY"
+      ],
+      "trap": "next-version",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/version-choice",
+      "name": "version-choice",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "version-choice"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-SAME-LICENCE"
+      ],
+      "trap": "version-choice",
+      "origin": "author",
+      "chosenSide": "GPL-2.0-only"
+    },
+    {
+      "location": "node_modules/relay/node_modules/classpath-adapter",
+      "name": "classpath-adapter",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "classpath-adapter"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-EXC-CONTEXT"
+      ],
+      "trap": "classpath-adapter",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/ambiguous-bsd-license",
+      "name": "ambiguous-bsd-license",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "ambiguous-bsd-license"
+      ],
+      "verdict": "unknown",
+      "ruleIds": [
+        "R-UNKNOWN-UNRESOLVED"
+      ],
+      "trap": "ambiguous-bsd-license",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/relay/node_modules/unlicensed-component",
+      "name": "unlicensed-component",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "relay",
+        "unlicensed-component"
+      ],
+      "verdict": "unknown",
+      "ruleIds": [
+        "R-UNKNOWN-UNRESOLVED"
+      ],
+      "trap": "unlicensed-component",
+      "origin": "author"
+    }
+  ],
+  "scenarios": []
+}

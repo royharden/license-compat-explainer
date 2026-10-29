@@ -1,13 +1,15 @@
 License Compatibility Explainer
-Copyright (c) 2026 Roy Harden. Licensed under the MIT License (see LICENSE).
+Copyright (c) 2026 Roy Harden. Code licensed under MIT (LICENSE).
 
-Third-party data: none vendored yet (stub, milestone M1).
+OSADL Open Source License Compatibility Matrix
+Copyright Open Source Automation Development Lab (OSADL). CC-BY-4.0.
+Source: https://www.osadl.org/fileadmin/checklists/matrix.csv
+Terms: https://www.osadl.org/Access-to-raw-data.oss-compliance-raw-data-access.0.html
+Retrieved 2026-10-24; vendored byte-for-byte, unchanged.
 
-Planned (milestone M2), each to be recorded here and in data/PROVENANCE.md with URL, retrieval
-date and sha256 once actually fetched:
-  - OSADL open source license compatibility matrix (matrix.csv), CC-BY-4.0, with attribution.
-  - GNU licence texts (GPL-2.0, GPL-3.0, LGPL-2.1, LGPL-3.0, AGPL-3.0, GCC-exception-3.1) from
-    gnu.org, under each document's own verbatim-copying grant.
+GNU GPL-2.0, GPL-3.0 and LGPL-2.1 licence documents are reproduced verbatim
+under each document’s own copying grant. Original copyright notices remain
+in the raw files. See data/PROVENANCE.md for URLs, SHA-256 and copying basis.
+No other third-party licence documents are included.
 
-No code was copied from any other project. Ideas credited in PLAN.md (prior art) are
-reimplemented independently.
+No implementation code was copied from another project.

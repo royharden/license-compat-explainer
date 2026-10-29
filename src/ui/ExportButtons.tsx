@@ -2,10 +2,13 @@ import type { AnalysisResult } from '@core/types.ts';
 import { buildJsonExport, serializeJsonExport } from '@core/report/json.ts';
 import { downloadText } from '../lib/download.ts';
 import { exportFileName } from './reportView.ts';
+import type { Ruling } from '@core/rulings/key.ts';
+import { buildMarkdownExport } from '@core/report/markdown.ts';
+import type { Explanation } from '@core/explain/guard.ts';
 
-export function ExportButtons({ result }: { result: AnalysisResult }) {
+export function ExportButtons({ result, projectKey, rulings, explanations }: { result: AnalysisResult; projectKey: string; rulings: readonly Ruling[]; explanations?: Readonly<Record<string, Explanation>> }) {
   const onJson = () => {
-    const doc = buildJsonExport(result, new Date().toISOString());
+    const doc = buildJsonExport(result, new Date().toISOString(), projectKey, rulings, explanations);
     downloadText(exportFileName(result, 'json'), serializeJsonExport(doc), 'application/json');
   };
   return (
@@ -13,7 +16,9 @@ export function ExportButtons({ result }: { result: AnalysisResult }) {
       <button type="button" onClick={onJson}>
         Export JSON
       </button>
-      <span className="hint">Markdown export arrives with the full report.</span>
+      <button type="button" onClick={() => downloadText(exportFileName(result, 'md'),
+        buildMarkdownExport(buildJsonExport(result, new Date().toISOString(), projectKey, rulings, explanations)), 'text/markdown')}>Export Markdown</button>
+      <span className="hint">Exports use this report’s analyzed settings and show ruling applicability separately from verdicts.</span>
     </div>
   );
 }

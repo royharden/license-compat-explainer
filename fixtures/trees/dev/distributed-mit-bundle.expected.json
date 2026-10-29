@@ -1,0 +1,385 @@
+{
+  "fixture": "distributed-mit-bundle.package-lock.json",
+  "split": "dev",
+  "origin": "author",
+  "synthetic": true,
+  "settings": {
+    "projectLicense": "MIT",
+    "mode": "distribute",
+    "bundled": true,
+    "acknowledgements": {
+      "unmodified_use": false,
+      "mpl_secondary_eligible": false
+    }
+  },
+  "writtenAgainstRulesEdition": "2026-10-24.m2",
+  "expectedCoverageGaps": 0,
+  "expected": [
+    {
+      "location": "node_modules/both-terms",
+      "name": "both-terms",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "both-terms"
+      ],
+      "verdict": "conflict",
+      "ruleIds": [
+        "R-DIST-PERM",
+        "R-DIST-STRONG"
+      ],
+      "trap": "AND worst leaf wins",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/choice-terms",
+      "name": "choice-terms",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "choice-terms"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-DIST-PERM"
+      ],
+      "trap": "OR chooses permissive look-alike",
+      "origin": "author",
+      "chosenSide": "MIT"
+    },
+    {
+      "location": "node_modules/build-gpl",
+      "name": "build-gpl",
+      "version": "1.0.0",
+      "scope": "dev",
+      "path": [
+        "root",
+        "build-gpl"
+      ],
+      "verdict": "conflict",
+      "ruleIds": [
+        "R-DIST-STRONG"
+      ],
+      "trap": "dev GPL is shipped when bundled yes",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/lesser-lib",
+      "name": "lesser-lib",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "lesser-lib"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-DIST-WEAK-BUNDLED"
+      ],
+      "trap": "LGPL3 bundled vs unbundled",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/file-lib",
+      "name": "file-lib",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "file-lib"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-DIST-WEAK-BUNDLED"
+      ],
+      "trap": "file-lib",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/classpath-lib",
+      "name": "classpath-lib",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "classpath-lib"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-EXC-CONTEXT"
+      ],
+      "trap": "Classpath before base conflict; unacknowledged",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/business-lookalike",
+      "name": "business-lookalike",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "business-lookalike"
+      ],
+      "verdict": "unknown",
+      "ruleIds": [
+        "R-UNKNOWN-UNRESOLVED"
+      ],
+      "trap": "BSL-1.1 must not alias to Boost",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/ambiguous-bsd",
+      "name": "ambiguous-bsd",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "ambiguous-bsd"
+      ],
+      "verdict": "unknown",
+      "ruleIds": [
+        "R-UNKNOWN-UNRESOLVED"
+      ],
+      "trap": "ambiguous-bsd",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/noncommercial",
+      "name": "noncommercial",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "noncommercial"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-SA-REVIEW"
+      ],
+      "trap": "noncommercial",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/source-available",
+      "name": "source-available",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "source-available"
+      ],
+      "verdict": "needs_review",
+      "ruleIds": [
+        "R-SA-REVIEW"
+      ],
+      "trap": "source-available",
+      "origin": "author"
+    },
+    {
+      "location": "node_modules/inject-description",
+      "name": "inject-description",
+      "version": "1.0.0",
+      "scope": "runtime",
+      "path": [
+        "root",
+        "inject-description"
+      ],
+      "verdict": "ok_with_conditions",
+      "ruleIds": [
+        "R-DIST-PERM"
+      ],
+      "trap": "inject-description",
+      "origin": "author"
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "unbundled-dev-exemption-and-lgpl",
+      "settings": {
+        "projectLicense": "MIT",
+        "mode": "distribute",
+        "bundled": false,
+        "acknowledgements": {
+          "unmodified_use": false,
+          "mpl_secondary_eligible": false
+        }
+      },
+      "expected": [
+        {
+          "location": "node_modules/both-terms",
+          "verdict": "conflict",
+          "ruleIds": [
+            "R-DIST-PERM",
+            "R-DIST-STRONG"
+          ]
+        },
+        {
+          "location": "node_modules/choice-terms",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-DIST-PERM"
+          ],
+          "chosenSide": "MIT"
+        },
+        {
+          "location": "node_modules/build-gpl",
+          "verdict": "ok",
+          "ruleIds": [
+            "R-DEV-NOT-SHIPPED"
+          ]
+        },
+        {
+          "location": "node_modules/lesser-lib",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-DIST-WEAK-UNBUNDLED"
+          ]
+        },
+        {
+          "location": "node_modules/file-lib",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-DIST-WEAK-UNBUNDLED"
+          ]
+        },
+        {
+          "location": "node_modules/classpath-lib",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-EXC-CONTEXT"
+          ]
+        },
+        {
+          "location": "node_modules/business-lookalike",
+          "verdict": "unknown",
+          "ruleIds": [
+            "R-UNKNOWN-UNRESOLVED"
+          ]
+        },
+        {
+          "location": "node_modules/ambiguous-bsd",
+          "verdict": "unknown",
+          "ruleIds": [
+            "R-UNKNOWN-UNRESOLVED"
+          ]
+        },
+        {
+          "location": "node_modules/noncommercial",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-SA-REVIEW"
+          ]
+        },
+        {
+          "location": "node_modules/source-available",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-SA-REVIEW"
+          ]
+        },
+        {
+          "location": "node_modules/inject-description",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-DIST-PERM"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "classpath-acknowledged",
+      "settings": {
+        "projectLicense": "MIT",
+        "mode": "distribute",
+        "bundled": true,
+        "acknowledgements": {
+          "unmodified_use": true,
+          "mpl_secondary_eligible": false
+        }
+      },
+      "expected": [
+        {
+          "location": "node_modules/both-terms",
+          "verdict": "conflict",
+          "ruleIds": [
+            "R-DIST-PERM",
+            "R-DIST-STRONG"
+          ]
+        },
+        {
+          "location": "node_modules/choice-terms",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-DIST-PERM"
+          ],
+          "chosenSide": "MIT"
+        },
+        {
+          "location": "node_modules/build-gpl",
+          "verdict": "conflict",
+          "ruleIds": [
+            "R-DIST-STRONG"
+          ]
+        },
+        {
+          "location": "node_modules/lesser-lib",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-DIST-WEAK-BUNDLED"
+          ]
+        },
+        {
+          "location": "node_modules/file-lib",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-DIST-WEAK-BUNDLED"
+          ]
+        },
+        {
+          "location": "node_modules/classpath-lib",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-EXC-CLASSPATH"
+          ]
+        },
+        {
+          "location": "node_modules/business-lookalike",
+          "verdict": "unknown",
+          "ruleIds": [
+            "R-UNKNOWN-UNRESOLVED"
+          ]
+        },
+        {
+          "location": "node_modules/ambiguous-bsd",
+          "verdict": "unknown",
+          "ruleIds": [
+            "R-UNKNOWN-UNRESOLVED"
+          ]
+        },
+        {
+          "location": "node_modules/noncommercial",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-SA-REVIEW"
+          ]
+        },
+        {
+          "location": "node_modules/source-available",
+          "verdict": "needs_review",
+          "ruleIds": [
+            "R-SA-REVIEW"
+          ]
+        },
+        {
+          "location": "node_modules/inject-description",
+          "verdict": "ok_with_conditions",
+          "ruleIds": [
+            "R-DIST-PERM"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "format": "explain-mock-fixtures@1",
+  "synthetic": true,
+  "defaults": {
+    "R-DIST-STRONG": "demo",
+    "R-STRONG-HOSTED": "demo"
+  },
+  "unavailable": {
+    "R-NET-HOSTED__demo": "AGPL-3.0-only#s13 not vendored: GNU GET timed out; no fixture or quote fabricated. D18."
+  },
+  "fixtures": {
+    "R-DIST-STRONG__demo": {
+      "summary": "Review the fixed rule facts and the cited passage for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "You may convey a work based on the Program, or the modifications to produce it from the Program, in the form of source code"
+        },
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "This fabricated licence sentence gives unlimited permission for every deployment."
+        }
+      ]
+    },
+    "R-DIST-STRONG__all_invalid": {
+      "summary": "Review the fixed rule facts and the cited passage for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "This fabricated licence sentence gives unlimited permission for every deployment."
+        }
+      ]
+    },
+    "R-DIST-STRONG__wrong_passage": {
+      "summary": "Review the fixed rule facts and the cited passage for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-2.0-only#s2",
+          "text": "You may convey a work based on the Program, or the modifications to produce it from the Program, in the form of source code"
+        }
+      ]
+    },
+    "R-DIST-STRONG__changed_case": {
+      "summary": "Review the fixed rule facts and the cited passage for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "YOU MAY CONVEY A WORK BASED ON THE PROGRAM, OR THE MODIFICATIONS TO PRODUCE IT FROM THE PROGRAM, IN THE FORM OF SOURCE CODE"
+        }
+      ]
+    },
+    "R-DIST-STRONG__foreign_id": {
+      "summary": "Review NASA-1.3 for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "You may convey a work based on the Program, or the modifications to produce it from the Program, in the form of source code"
+        },
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "This fabricated licence sentence gives unlimited permission for every deployment."
+        }
+      ]
+    },
+    "R-DIST-STRONG__verdict_key": {
+      "summary": "Review the fixed rule facts and the cited passage for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "You may convey a work based on the Program, or the modifications to produce it from the Program, in the form of source code"
+        },
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "This fabricated licence sentence gives unlimited permission for every deployment."
+        }
+      ],
+      "verdict": "ok"
+    },
+    "R-DIST-STRONG__options_key": {
+      "summary": "Review the fixed rule facts and the cited passage for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "You may convey a work based on the Program, or the modifications to produce it from the Program, in the form of source code"
+        },
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "This fabricated licence sentence gives unlimited permission for every deployment."
+        }
+      ],
+      "options": [
+        "ship it"
+      ]
+    },
+    "R-DIST-STRONG__extra_key": {
+      "summary": "Review the fixed rule facts and the cited passage for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "You may convey a work based on the Program, or the modifications to produce it from the Program, in the form of source code"
+        },
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "This fabricated licence sentence gives unlimited permission for every deployment."
+        }
+      ],
+      "status": "compatible"
+    },
+    "R-DIST-STRONG__contradiction": {
+      "summary": "This is compatible and permitted.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "You may convey a work based on the Program, or the modifications to produce it from the Program, in the form of source code"
+        },
+        {
+          "passage_id": "GPL-3.0-only#s5",
+          "text": "This fabricated licence sentence gives unlimited permission for every deployment."
+        }
+      ]
+    },
+    "R-STRONG-HOSTED__demo": {
+      "summary": "Review the fixed rule facts and the cited passage for this setting.",
+      "quotes": [
+        {
+          "passage_id": "GPL-3.0-only#s2",
+          "text": "This License explicitly affirms your unlimited permission to run the unmodified Program."
+        },
+        {
+          "passage_id": "GPL-3.0-only#s2",
+          "text": "This fabricated licence sentence gives unlimited permission for every deployment."
+        }
+      ]
+    }
+  }
+}
